@@ -1,0 +1,38 @@
+{% extends 'chat/base.html' %}
+
+{% block title %}Your Search History{% endblock %}
+
+{% block header %}
+    Your Search History
+{% endblock %}
+
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>Text Input</th>
+                <th>File Name</th>
+                <th>Summary (English)</th>
+                <th>Translation (Korean)</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for history in search_histories %}
+                <tr>
+                    <td>{{ history.url }}</td>
+                    <td>{{ history.text_input }}</td>
+                    <td>{{ history.file_name }}</td>
+                    <td>{{ history.summary_result }}</td>
+                    <td>{{ history.translation_result }}</td>
+                    <td>{{ history.created_at }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">No history found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
