@@ -81,6 +81,16 @@ class ChatView(LoginRequiredMixin, FormView):
         # 영어로 출력된 요약을 한글로 번역
         translation_result = translate_to_korean(summary_result)
 
+        # 검색 기록을 DB에 저장
+        SearchHistory.objects.create(
+            user=self.request.user,
+            url=youtube_url,
+            text_input=text_input,
+            file_name=file_input.name if file_input else None,
+            summary_result=summary_result,
+            translation_result=translation_result,
+        )
+
         return self.render_to_response(self.get_context_data(
             summary_result=summary_result,
             translation_result=translation_result
@@ -88,3 +98,4 @@ class ChatView(LoginRequiredMixin, FormView):
 
 class HomeView(TemplateView):
     template_name = 'chat/home.html'
+
