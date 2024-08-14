@@ -3,29 +3,47 @@
 {% block title %}ChatGPT Integration{% endblock %}
 
 {% block header %}
-    <h2>Simple Chat Interface</h2>
+    <h2>고급 채팅 인터페이스</h2>
 {% endblock %}
 
 {% block content %}
-    <p>This is a simple chat interface using ChatGPT.</p>
-    <form method="post" class="mb-4">
-        {% csrf_token %}
-        <div class="form-group">
-            {{ form.text_input.label_tag }}
-            {{ form.text_input }}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-8 mx-auto">
+            <div class="search-container mb-3">
+                <input type="text" class="form-control search-input" placeholder="찾고 싶은 지식을 입력하세요">
+            </div>
+            <p>이것은 파일 업로드와 YouTube URL을 지원하는 고급 ChatGPT 인터페이스입니다.</p>
+            <form method="post" enctype="multipart/form-data" class="mb-4">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    {{ form.text_input.label_tag }}
+                    {{ form.text_input }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.file_input.label_tag }}
+                    {{ form.file_input }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.youtube_url.label_tag }}
+                    {{ form.youtube_url }}
+                </div>
+                <button type="submit" class="btn btn-primary w-100">요약 생성</button>
+            </form>
         </div>
-        <button type="submit" class="btn btn-primary w-100 mt-3">요약 생성</button>
-    </form>
+    </div>
 
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-danger">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-
-    {% if result %}
-        <div class="alert alert-info mt-3">
-            <strong>Summary:</strong> {{ result }}
+    {% if summary_result %}
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="alert alert-info mt-3">
+                    <strong>요약 (영어):</strong> {{ summary_result }}
+                </div>
+                <div class="alert alert-success mt-3">
+                    <strong>요약 (한글):</strong> {{ translation_result }}
+                </div>
+            </div>
         </div>
     {% endif %}
+</div>
 {% endblock %}
