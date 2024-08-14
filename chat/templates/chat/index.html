@@ -1,0 +1,31 @@
+{% extends 'chat/base.html' %}
+
+{% block title %}ChatGPT Integration{% endblock %}
+
+{% block header %}
+    <h2>Simple Chat Interface</h2>
+{% endblock %}
+
+{% block content %}
+    <p>This is a simple chat interface using ChatGPT.</p>
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.text_input.label_tag }}
+            {{ form.text_input }}
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mt-3">요약 생성</button>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% if result %}
+        <div class="alert alert-info mt-3">
+            <strong>Summary:</strong> {{ result }}
+        </div>
+    {% endif %}
+{% endblock %}
